@@ -1,0 +1,9 @@
+<h1> Delete Page </h1>
+
+<p>Are you sure you wish to delete this book?</p>
+
+<%= render @book %>
+
+<%= button_to "Confirm Delete", @book, method: :delete%>
+<br>
+<%= link_to "Back to books", books_path %>
