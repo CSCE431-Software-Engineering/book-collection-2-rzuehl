@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "books/edit", type: :view do
   let(:book) {
-    Book.create!()
+    Book.create!(title: "Test")
   }
 
   before(:each) do
