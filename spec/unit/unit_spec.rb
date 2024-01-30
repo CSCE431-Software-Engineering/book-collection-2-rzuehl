@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe Book, type: :model do
   #create the subject
   subject do
-    described_class.new(title: 'harry potter', author: 'Ryan', price: 10.00, date: "2022-10-01")
+    described_class.new(title: 'harry potter', author: 'Ryan', price: 10.00, published_date: "2022-10-01")
   end
 
   #test valid inputs
@@ -27,8 +27,8 @@ RSpec.describe Book, type: :model do
     expect(subject).not_to be_valid
   end
 
-  it 'is not valid without a date' do
-    subject.date = nil
+  it 'is not valid without a published_date' do
+    subject.published_date = nil
     expect(subject).not_to be_valid
   end
 end

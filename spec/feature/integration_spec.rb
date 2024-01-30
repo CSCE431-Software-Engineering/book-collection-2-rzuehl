@@ -7,7 +7,6 @@ RSpec.describe 'Creating a book', type: :feature do
     fill_in "book[title]", with: 'harry potter'
     fill_in "book[author]", with: 'Ryan'
     fill_in "book[price]", with: 10.00
-    fill_in "book[date]", with: '2022-10-01'
     click_on 'Create Book'
     expect(page).to have_content('Book was successfully created')
   end
@@ -18,7 +17,6 @@ RSpec.describe 'Creating a book', type: :feature do
     fill_in "book[title]", with: nil
     fill_in "book[author]", with: 'Ryan'
     fill_in "book[price]", with: 10.00
-    fill_in "book[date]", with: '2022-10-01'
     click_on 'Create Book'
     expect(page).to_not have_content('Book was successfully created')
   end
@@ -29,8 +27,6 @@ RSpec.describe 'Creating a book', type: :feature do
     fill_in "book[title]", with: 'harry potter'
     fill_in "book[author]", with: nil
     fill_in "book[price]", with: 10.00
-    fill_in "book[date]", with: '2022-10-01'
-
     click_on 'Create Book'
     expect(page).to_not have_content('Book was successfully created')
   end
@@ -41,18 +37,51 @@ RSpec.describe 'Creating a book', type: :feature do
     fill_in "book[title]", with: 'harry potter'
     fill_in "book[author]", with: 'Ryan'
     fill_in "book[price]", with: nil
-    fill_in "book[date]", with: '2022-10-01'
     click_on 'Create Book'
     expect(page).to_not have_content('Book was successfully created')
   end
+end
 
-  scenario 'invalid date' do
+RSpec.describe 'Editing a book', type: :feature do
+    #test edit book
+    scenario 'edit book' do
+      visit new_book_path
+      fill_in "book[title]", with: 'harry potter'
+      fill_in "book[author]", with: 'Ryan'
+      fill_in "book[price]", with: 10.00
+      click_on 'Create Book'
+      visit books_url #or Back to books or Edit this book
+      click_on "Show this book"
+      click_on "Edit this book"
+      fill_in "book[title]", with: 'this is a new title'
+      click_on "Update Book"
+      expect(page).to have_content('Book was successfully updated')
+    end
+
+    scenario 'edit book unhappy' do
+      visit new_book_path
+      fill_in "book[title]", with: 'harry potter'
+      fill_in "book[author]", with: 'Ryan'
+      fill_in "book[price]", with: 10.00
+      click_on 'Create Book'
+      visit books_url #or Back to books or Edit this book
+      click_on "Show this book"
+      click_on "Edit this book"
+      fill_in "book[title]", with: nil
+      click_on "Update Book"
+      expect(page).to_not have_content('Book was successfully updated')
+    end
+end
+
+RSpec.describe 'Deleting a book', type: :feature do
+  scenario 'delete book happy' do
     visit new_book_path
     fill_in "book[title]", with: 'harry potter'
     fill_in "book[author]", with: 'Ryan'
     fill_in "book[price]", with: 10.00
-    fill_in "book[date]", with: nil
     click_on 'Create Book'
-    expect(page).to_not have_content('Book was successfully created')
+    click_on "Delete book"
+    click_on "Confirm Delete"
+    expect(page).to have_content("Book was successfully destroyed")
   end
 end
